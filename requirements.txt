@@ -1,0 +1,6 @@
+# pipeline: só stdlib + Pillow (título da cena 1)
+pillow>=10
+# interface web
+fastapi>=0.110
+uvicorn>=0.27
+pydantic>=2

@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+output/
+work/
+dist/
+*.mp4
+*.mp3
+*.wav
+*.png
+!docs/**/*.png
+!guia/assets/*
+!capa/capa.png
+.DS_Store

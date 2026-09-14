@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>videomotival</title>
+<style>
+  :root {
+    --ink: #141311;
+    --ink-2: #1d1b18;
+    --ink-3: #2a2723;
+    --line: #38342e;
+    --paper: #f3efe6;
+    --paper-2: #e6e0d3;
+    --mute: #9a927f;
+    --ochre: #c98b3a;
+    --ochre-2: #e0a656;
+    --ok: #7fae6a;
+    --bad: #d46b5c;
+    --radius: 6px;
+    font-family: "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ink); color: var(--paper); }
+  body { font-size: 15px; line-height: 1.45; min-height: 100vh; }
+  a { color: var(--ochre-2); }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; border: 1px solid var(--line); background: var(--ink-3); color: var(--paper); padding: 8px 14px; border-radius: var(--radius); }
+  button:hover { border-color: var(--ochre); }
+  button:disabled { opacity: .45; cursor: default; border-color: var(--line); }
+  button.primary { background: var(--ochre); color: var(--ink); border-color: var(--ochre); font-weight: 600; }
+  button.primary:hover { background: var(--ochre-2); }
+  button.small { padding: 4px 10px; font-size: 13px; }
+  input, select, textarea { background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 10px; width: 100%; }
+  input:focus, select:focus, textarea:focus, button:focus-visible { outline: 2px solid var(--ochre); outline-offset: 1px; }
+  textarea { resize: vertical; min-height: 64px; }
+  label { display: block; font-size: 13px; color: var(--mute); margin: 10px 0 4px; }
+
+  .app { display: grid; grid-template-columns: 340px 1fr; min-height: 100vh; }
+  .rail { border-right: 1px solid var(--line); padding: 22px 20px; background: var(--ink-2); overflow-y: auto; }
+  .main { padding: 26px 32px 60px; max-width: 1240px; }
+  h1 { font-size: 22px; margin: 0 0 2px; letter-spacing: .01em; }
+  h1 small { color: var(--mute); font-weight: 400; font-size: 13px; margin-left: 8px; }
+  .tagline { color: var(--mute); font-size: 13px; margin: 0 0 20px; }
+  .row { display: flex; gap: 10px; }
+  .row > * { flex: 1; }
+  .hint { color: var(--mute); font-size: 12px; margin-top: 4px; }
+  .env { margin-top: 18px; font-size: 12px; color: var(--mute); border-top: 1px solid var(--line); padding-top: 12px; }
+  .env .bad { color: var(--bad); }
+  .env .ok { color: var(--ok); }
+
+  .runs { margin-top: 24px; }
+  .runs h2 { font-size: 13px; color: var(--mute); font-weight: 500; margin: 0 0 8px; }
+  .run-item { display: block; width: 100%; text-align: left; background: transparent; border: 1px solid transparent; padding: 8px 10px; margin-bottom: 4px; border-radius: var(--radius); }
+  .run-item:hover { background: var(--ink-3); }
+  .run-item.active { background: var(--ink-3); border-color: var(--ochre); }
+  .run-item .t { display: block; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .run-item .s { display: block; font-size: 12px; color: var(--mute); }
+
+  .empty { color: var(--mute); padding: 80px 0; text-align: center; }
+  .empty b { color: var(--paper); display: block; font-size: 20px; margin-bottom: 6px; }
+
+  .head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .head h2 { font-size: 26px; margin: 0; line-height: 1.15; }
+  .head .meta { color: var(--mute); font-size: 13px; margin-top: 6px; }
+  .stages { display: flex; gap: 6px; margin: 22px 0 8px; flex-wrap: wrap; }
+  .stage { flex: 1; min-width: 150px; border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; background: var(--ink-2); }
+  .stage .n { font-size: 12px; color: var(--mute); }
+  .stage .v { font-weight: 600; margin-top: 2px; }
+  .stage.done { border-color: var(--ok); }
+  .stage.live { border-color: var(--ochre); box-shadow: inset 0 0 0 1px var(--ochre); }
+  .stage.live .v::after { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ochre); margin-left: 8px; animation: pulse 1.2s infinite; }
+  @keyframes pulse { 50% { opacity: .2; } }
+  @media (prefers-reduced-motion: reduce) { .stage.live .v::after { animation: none; } }
+  .stage.fail { border-color: var(--bad); }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 20px; align-items: center; }
+  .error { background: #3a1f1b; border: 1px solid var(--bad); color: #f2c9c2; padding: 10px 14px; border-radius: var(--radius); margin: 12px 0; white-space: pre-wrap; }
+
+  .final { margin: 8px 0 26px; }
+  .final video { width: 100%; max-height: 560px; background: #000; border-radius: var(--radius); border: 1px solid var(--line); }
+  .final .paths { font-size: 12px; color: var(--mute); margin-top: 6px; word-break: break-all; }
+
+  .bible { background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 18px; }
+  .bible label { margin-top: 0; }
+
+  .scene { display: grid; grid-template-columns: 380px 1fr; gap: 18px; background: var(--paper); color: var(--ink); border-radius: var(--radius); padding: 14px; margin-bottom: 14px; }
+  .scene .img { position: relative; aspect-ratio: 16/9; background: var(--paper-2); border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: #8a8171; font-size: 13px; }
+  .scene .img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .scene .num { position: absolute; top: 8px; left: 8px; background: var(--ink); color: var(--paper); font-size: 12px; padding: 2px 8px; border-radius: 3px; }
+  .scene .dur { position: absolute; bottom: 8px; right: 8px; background: rgba(20,19,17,.8); color: var(--paper); font-size: 12px; padding: 2px 8px; border-radius: 3px; }
+  .scene label { color: #6f675a; margin-top: 8px; }
+  .scene textarea, .scene input { background: #fff; border-color: #d8d1c2; color: var(--ink); }
+  .scene audio { width: 100%; margin-top: 8px; height: 34px; }
+  .scene .tools { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+  .scene .tools button { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .scene .tools button:hover { background: var(--ink-3); }
+  .scene .tools .seed { font-size: 12px; color: #8a8171; }
+
+  details.log { margin-top: 24px; color: var(--mute); }
+  details.log pre { background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; font-size: 12px; max-height: 320px; overflow: auto; white-space: pre-wrap; color: var(--paper); }
+  .toast { position: fixed; bottom: 18px; right: 18px; background: var(--ochre); color: var(--ink); padding: 10px 16px; border-radius: var(--radius); font-weight: 600; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .rail { border-right: 0; border-bottom: 1px solid var(--line); }
+    .main { padding: 18px 16px 60px; }
+    .scene { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <h1>videomotival <small id="ver"></small></h1>
+    <p class="tagline">Um tema vira história, voz, ilustrações e MP4.</p>
+
+    <form id="create" autocomplete="off">
+      <label for="topic">Tema do vídeo</label>
+      <input id="topic" required placeholder="Ex.: Pare de esperar a motivação">
+      <div class="row">
+        <div>
+          <label for="duration">Duração alvo (s)</label>
+          <input id="duration" type="number" min="15" max="900" value="75">
+        </div>
+        <div>
+          <label for="lang">Idioma</label>
+          <select id="lang">
+            <option value="pt">português</option>
+            <option value="en">English</option>
+            <option value="es">español</option>
+          </select>
+        </div>
+      </div>
+      <label for="voice">Voz</label>
+      <select id="voice"></select>
+      <label for="story_provider">Roteirista (LLM)</label>
+      <select id="story_provider">
+        <option value="">automático (openrouter → groq → ollama)</option>
+        <option value="openrouter">openrouter</option>
+        <option value="groq">groq</option>
+        <option value="ollama">ollama (local)</option>
+      </select>
+      <label for="extra">Instruções extras para a história (opcional)</label>
+      <textarea id="extra" rows="2" placeholder="Ex.: protagonista mulher, tom leve, terminar com uma pergunta"></textarea>
+      <label for="gate">Duração fora da tolerância</label>
+      <select id="gate">
+        <option value="warn">só avisar e seguir</option>
+        <option value="strict">bloquear o render (como no tutorial)</option>
+      </select>
+      <div class="row" style="margin-top:16px">
+        <button type="submit" class="primary" id="btn-plan">Gerar roteiro e revisar</button>
+        <button type="button" id="btn-auto">Fazer o vídeo inteiro</button>
+      </div>
+      <p class="hint">"Gerar roteiro" para no plano para você revisar cenas antes de gastar GPU. "Vídeo inteiro" roda tudo sem parar.</p>
+    </form>
+
+    <div class="env" id="env">verificando ambiente…</div>
+
+    <div class="runs">
+      <h2>Vídeos</h2>
+      <div id="runs"></div>
+    </div>
+  </aside>
+
+  <main class="main" id="main">
+    <div class="empty"><b>Nenhum vídeo aberto</b>Crie um tema à esquerda ou escolha um vídeo da lista.</div>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const state = { runs: [], current: null, run: null, timer: null, dirty: false };
+const STAGE_LABELS = { plan: "Roteiro", tts: "Voz", images: "Ilustrações", render: "Render" };
+const STATUS_LABEL = { created: "criado", planning: "escrevendo…", review: "em revisão", tts: "gerando voz…", images: "gerando imagens…", render: "renderizando…", done: "pronto", failed: "falhou" };
+
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2200); }
+async function api(path, opts = {}) {
+  const res = await fetch(path, { headers: { "Content-Type": "application/json" }, ...opts });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.detail || res.statusText);
+  return data;
+}
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+async function loadConfig() {
+  const cfg = await api("/api/config");
+  $("#ver").textContent = "v" + cfg.version;
+  const sel = $("#voice");
+  sel.innerHTML = cfg.voices.map(v => `<option value="${esc(v.engine)}|${esc(v.id)}">${esc(v.label)}</option>`).join("");
+  const def = `${cfg.settings.TTS_ENGINE}|${cfg.settings.TTS_VOICE}`;
+  if ([...sel.options].some(o => o.value === def)) sel.value = def;
+  $("#lang").value = cfg.settings.STORY_LANG || "pt";
+  $("#gate").value = cfg.settings.DURATION_GATE || "warn";
+  const env = $("#env");
+  env.innerHTML = cfg.checks.map(c => `<div class="ok">✓ ${esc(c)}</div>`).join("") + cfg.problems.map(p => `<div class="bad">✗ ${esc(p)}</div>`).join("") + `<div style="margin-top:6px">saída: ${esc(cfg.settings.OUTPUT_ROOT)}</div>`;
+}
+
+async function loadRuns() {
+  state.runs = await api("/api/runs");
+  const box = $("#runs");
+  if (!state.runs.length) { box.innerHTML = `<div class="hint">Nenhum vídeo ainda.</div>`; return; }
+  box.innerHTML = state.runs.map(r => `
+    <button class="run-item ${r.run_id === state.current ? "active" : ""}" data-id="${esc(r.run_id)}">
+      <span class="t">${esc(r.title || r.topic)}</span>
+      <span class="s">${esc(STATUS_LABEL[r.status] || r.status)} · ${r.counts.scenes} cenas · ${r.target_duration_seconds}s</span>
+    </button>`).join("");
+  box.querySelectorAll(".run-item").forEach(b => b.onclick = () => open(b.dataset.id));
+}
+
+async function open(id) {
+  state.current = id; state.dirty = false;
+  await refresh();
+  loadRuns();
+}
+
+async function refresh() {
+  if (!state.current) return;
+  const run = await api(`/api/runs/${encodeURIComponent(state.current)}`);
+  state.run = run;
+  render(run);
+  clearTimeout(state.timer);
+  const active = run.running || ["planning", "tts", "images", "render"].includes(run.status);
+  if (active) state.timer = setTimeout(() => { refresh(); loadRuns(); }, 2500);
+}
+
+function stageClass(run, key) {
+  const c = run.counts;
+  const done = { plan: c.scenes > 0, tts: c.scenes > 0 && c.audio === c.scenes, images: c.scenes > 0 && c.images === c.scenes, render: run.final }[key];
+  const liveMap = { planning: "plan", tts: "tts", images: "images", render: "render" };
+  if (run.status === "failed" && run.stage === key) return "fail";
+  if (liveMap[run.status] === key && run.running) return "live";
+  return done ? "done" : "";
+}
+function stageValue(run, key) {
+  const c = run.counts, p = (run.progress || {})[key];
+  if (key === "plan") return c.scenes ? `${c.scenes} cenas` : "—";
+  if (key === "render") return run.final ? "MP4 pronto" : (p && run.status === "render" ? `${p.done}/${p.total} cenas` : "—");
+  const n = key === "tts" ? c.audio : c.images;
+  return c.scenes ? `${n}/${c.scenes}` : "—";
+}
+
+function render(run) {
+  const main = $("#main");
+  const busy = run.running;
+  const c = run.counts;
+  const canTts = c.scenes > 0 && !busy, canImg = c.scenes > 0 && !busy, canRender = !busy && c.scenes > 0 && c.audio === c.scenes && c.images === c.scenes;
+  const measured = run.measured_seconds ? `${run.measured_seconds.toFixed(1)} s medidos` : (run.estimated_seconds ? `~${run.estimated_seconds} s estimados` : "");
+  const preserveScroll = main.scrollTop;
+  // não sobrescrever edições em andamento
+  if (state.dirty && !busy) { return; }
+  main.innerHTML = `
+    <div class="head">
+      <div>
+        <h2>${esc(run.title || run.topic)}</h2>
+        <div class="meta">${esc(run.topic)} · alvo ${run.target_duration_seconds}s · ${esc(run.lang)} · ${esc(STATUS_LABEL[run.status] || run.status)}${measured ? " · " + measured : ""}</div>
+      </div>
+      <div class="actions" style="margin:0">
+        <button id="a-tts" ${canTts ? "" : "disabled"}>Gerar voz</button>
+        <button id="a-img" ${canImg ? "" : "disabled"}>Gerar ilustrações</button>
+        <button id="a-render" ${canRender ? "" : "disabled"}>Renderizar MP4</button>
+        <button id="a-all" class="primary" ${c.scenes > 0 && !busy ? "" : "disabled"}>Voz + imagens + render</button>
+      </div>
+    </div>
+    ${run.error ? `<div class="error">${esc(run.error)}</div>` : ""}
+    <div class="stages">${Object.keys(STAGE_LABELS).map(k => `<div class="stage ${stageClass(run, k)}"><div class="n">${STAGE_LABELS[k]}</div><div class="v">${stageValue(run, k)}</div></div>`).join("")}</div>
+    ${run.final ? `<div class="final"><video controls preload="metadata" src="/api/runs/${encodeURIComponent(run.run_id)}/file/final.mp4?t=${encodeURIComponent(run.updated_at)}"></video><div class="paths">${esc(run.path)}/final.mp4 · <a href="/api/runs/${encodeURIComponent(run.run_id)}/file/final.mp4" download>baixar</a> · <a href="/api/runs/${encodeURIComponent(run.run_id)}/file/work/transcript.md" target="_blank">transcrição</a></div></div>` : ""}
+    ${c.scenes ? `
+      <div class="bible">
+        <label for="f-title">Título (aparece na cena 1)</label>
+        <input id="f-title" value="${esc(run.plan.title)}" ${busy ? "disabled" : ""}>
+        <label for="f-bible">Personagem (bíblia visual, em inglês — copiada em todo prompt)</label>
+        <textarea id="f-bible" rows="3" ${busy ? "disabled" : ""}>${esc(run.plan.character_bible)}</textarea>
+      </div>
+      <div id="scenes">${run.scenes.map(s => sceneHtml(run, s, busy)).join("")}</div>
+      <div class="actions"><button id="a-save" class="primary" ${busy ? "disabled" : ""}>Salvar edições do roteiro</button><span class="hint">Depois de editar narração, refaça a voz; depois de editar a descrição, refaça a imagem da cena.</span></div>
+    ` : (run.status === "planning" ? `<div class="empty"><b>Escrevendo a história…</b>o roteirista está montando as cenas.</div>` : "")}
+    <details class="log"><summary>Log</summary><pre>${esc(run.log_tail)}</pre></details>
+  `;
+  main.scrollTop = preserveScroll;
+  $("#a-tts")?.addEventListener("click", () => runStages(["tts"]));
+  $("#a-img")?.addEventListener("click", () => runStages(["images"]));
+  $("#a-render")?.addEventListener("click", () => runStages(["render"]));
+  $("#a-all")?.addEventListener("click", () => runStages(["tts", "images", "render"]));
+  $("#a-save")?.addEventListener("click", savePlan);
+  main.querySelectorAll("input, textarea").forEach(el => el.addEventListener("input", () => { state.dirty = true; }));
+  main.querySelectorAll("[data-regen]").forEach(b => b.onclick = () => regen(+b.dataset.regen));
+  main.querySelectorAll("[data-retts]").forEach(b => b.onclick = () => runStages(["tts"], true, +b.dataset.retts));
+}
+
+function sceneHtml(run, s, busy) {
+  const id = encodeURIComponent(run.run_id), n = String(s.scene_number).padStart(3, "0");
+  const stamp = encodeURIComponent(run.updated_at);
+  return `<div class="scene" data-n="${s.scene_number}">
+    <div>
+      <div class="img">
+        ${s.image ? `<img src="/api/runs/${id}/file/work/images/${n}.png?t=${stamp}" alt="cena ${s.scene_number}">` : "sem ilustração ainda"}
+        <span class="num">${s.scene_number}</span>
+        ${s.duration_seconds ? `<span class="dur">${s.duration_seconds.toFixed(1)} s</span>` : ""}
+      </div>
+      ${s.audio ? `<audio controls preload="none" src="/api/runs/${id}/file/work/audio/${n}.mp3?t=${stamp}"></audio>` : ""}
+      <div class="tools">
+        <button class="small" data-regen="${s.scene_number}" ${busy ? "disabled" : ""}>Nova ilustração</button>
+        ${s.audio ? `<button class="small" data-retts="${s.scene_number}" ${busy ? "disabled" : ""}>Refazer voz</button>` : ""}
+        <span class="seed">seed ${s.image_seed ?? run.plan.image_seed}</span>
+      </div>
+    </div>
+    <div>
+      <label>Narração</label>
+      <textarea class="f-narr" rows="3" ${busy ? "disabled" : ""}>${esc(s.narration)}</textarea>
+      <label>Descrição da cena (para o gerador de imagem, em inglês)</label>
+      <textarea class="f-comp" rows="3" ${busy ? "disabled" : ""}>${esc(s.composition || s.image_prompt)}</textarea>
+      <label>Nota para revisão</label>
+      <input class="f-vis" value="${esc(s.visual_description)}" ${busy ? "disabled" : ""}>
+    </div>
+  </div>`;
+}
+
+async function savePlan(silent = false) {
+  const run = state.run;
+  const scenes = [...document.querySelectorAll(".scene")].map((el, i) => {
+    const src = run.scenes[i];
+    return { ...src, scene_number: i + 1, narration: $(".f-narr", el).value.trim(), composition: $(".f-comp", el).value.trim(), visual_description: $(".f-vis", el).value.trim() };
+  });
+  const body = { title: $("#f-title").value.trim(), character_bible: $("#f-bible").value.trim(), scenes };
+  try {
+    await api(`/api/runs/${encodeURIComponent(run.run_id)}/plan`, { method: "PUT", body: JSON.stringify(body) });
+    state.dirty = false;
+    if (!silent) toast("Roteiro salvo");
+    await refresh(); loadRuns();
+  } catch (e) { alert("Não salvou: " + e.message); }
+}
+
+async function runStages(stages, force = false, only = null) {
+  if (state.dirty) await savePlan(true);
+  try {
+    if (only) {
+      // refazer só uma cena: apaga o mp3 dela via regen de voz = force na etapa com filtro não exposto; usa force total na cena
+      await api(`/api/runs/${encodeURIComponent(state.current)}/run`, { method: "POST", body: JSON.stringify({ stages, force: true, only }) });
+    } else {
+      await api(`/api/runs/${encodeURIComponent(state.current)}/run`, { method: "POST", body: JSON.stringify({ stages, force }) });
+    }
+    toast("Iniciado: " + stages.map(s => STAGE_LABELS[s]).join(" → "));
+    setTimeout(refresh, 400);
+  } catch (e) { alert(e.message); }
+}
+
+async function regen(n) {
+  if (state.dirty) await savePlan(true);
+  toast(`Gerando nova ilustração da cena ${n}…`);
+  try {
+    await api(`/api/runs/${encodeURIComponent(state.current)}/scenes/${n}/regen-image`, { method: "POST", body: JSON.stringify({}) });
+    await refresh();
+  } catch (e) { alert(e.message); }
+}
+
+async function createRun(auto) {
+  const [engine, voice] = $("#voice").value.split("|");
+  const body = { topic: $("#topic").value.trim(), duration: +$("#duration").value, lang: $("#lang").value, story_provider: $("#story_provider").value || null, tts_engine: engine, voice, gate: $("#gate").value, auto, extra: $("#extra").value.trim() };
+  if (!body.topic) return;
+  $("#btn-plan").disabled = $("#btn-auto").disabled = true;
+  try {
+    const run = await api("/api/runs", { method: "POST", body: JSON.stringify(body) });
+    $("#topic").value = "";
+    await open(run.run_id);
+    toast(auto ? "Produzindo o vídeo inteiro" : "Escrevendo o roteiro");
+  } catch (e) { alert(e.message); }
+  $("#btn-plan").disabled = $("#btn-auto").disabled = false;
+}
+$("#create").addEventListener("submit", e => { e.preventDefault(); createRun(false); });
+$("#btn-auto").addEventListener("click", () => createRun(true));
+
+loadConfig().catch(e => { $("#env").innerHTML = `<div class="bad">✗ ${esc(e.message)}</div>`; });
+loadRuns();
+</script>
+</body>
+</html>

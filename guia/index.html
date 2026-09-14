@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>videomotival — canal motivacional automatizado a custo zero</title>
+<meta name="description" content="videomotival: um tema vira história, narração por cena, ilustrações stick-figure e um MP4 16:9 — tudo rodando local, sem pagar por gerador de imagem ou vídeo. Interface web, CLI e skill do Claude Code.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px 1fr;gap:16px;margin-bottom:26px}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🎬</span> videomotival</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">O que é</a>
+    <a class="sec" href="#fluxo">Como funciona</a>
+    <a class="sec" href="#guia">Guia de uso</a>
+    <a class="sec" href="#exemplos">Exemplos</a>
+    <a class="sec" href="#roadmap">Roadmap</a>
+    <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/videomotival" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Canal motivacional · automação local · custo zero</span>
+      <h1>Um tema vira um <span class="amb">vídeo</span> pronto</h1>
+      <p class="lead">História original, narração por cena, ilustrações stick-figure consistentes e um MP4 16:9 montado pelo FFmpeg. Sem pagar gerador de imagem nem de vídeo.</p>
+      <div class="cta">
+        <a class="btn" href="#guia">Começar o guia</a>
+        <a class="btn ghost" href="https://github.com/inematds/videomotival" target="_blank" rel="noopener">Ver no GitHub</a>
+      </div>
+    </div>
+    <figure><img src="assets/hero.png" alt="Ilustração pintada à mão de um stick figure com cachecol ocre subindo uma colina em papel texturizado"></figure>
+  </div>
+</header>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">O que é</span>
+  <h2>A fábrica de vídeo do canal "Productive Peter", só que sua e de graça</h2>
+  <p class="sub">Formato simples e repetível: uma história motivacional, uma voz, ilustrações que trocam conforme a narração avança. O videomotival automatiza o formato inteiro, da ideia ao MP4, com tudo rodando na sua máquina.</p>
+  <div class="grid g3">
+    <div class="card"><h3>✍️ Escreve a história</h3><p>Um LLM (OpenRouter, Groq ou Ollama local) escreve uma história original com arco em seis movimentos e já a divide em cenas: narração, descrição visual e prompt de imagem.</p></div>
+    <div class="card"><h3>🎙️ Narra cena a cena</h3><p>Cada cena vira um MP3 separado (inemavox, voz clonada rachel). A duração do áudio comanda o tempo da imagem na tela — sem Whisper, sem timestamps.</p></div>
+    <div class="card"><h3>🖼️ Ilustra e monta</h3><p>flux2-klein na GPU local gera uma ilustração 16:9 por cena no mesmo estilo e com o mesmo personagem. O FFmpeg aplica zoom lento, grava o título e concatena o vídeo final.</p></div>
+  </div>
+</div></section>
+
+<section id="fluxo"><div class="wrap">
+  <span class="chip">Como funciona</span>
+  <h2>Sete etapas, um comando</h2>
+  <p class="sub">O pipeline é determinístico e retomável: cada etapa grava seus arquivos na pasta da corrida e pula o que já existe. Você pode parar para revisar o roteiro antes de gastar GPU, ou rodar tudo de uma vez.</p>
+  <div class="flow">
+    <span>Tema</span><span class="arr">→</span>
+    <span>História + cenas</span><span class="arr">→</span>
+    <span>Voz por cena</span><span class="arr">→</span>
+    <span>ffprobe mede</span><span class="arr">→</span>
+    <span>Ilustrações</span><span class="arr">→</span>
+    <span>FFmpeg cenas</span><span class="arr">→</span>
+    <span>MP4 final</span>
+  </div>
+  <div class="grid g3" style="margin-top:26px">
+    <div class="card"><h3>Três portas de entrada</h3><p>Interface web local (revisão visual das cenas, regenerar ilustração, refazer voz), CLI por etapa, e uma skill do Claude Code que orquestra tudo a partir de "faz um vídeo de 90 s sobre X".</p></div>
+    <div class="card"><h3>Estilo travado em código</h3><p>Estilo visual, bíblia do personagem e o bloco "sem texto" são anexados a todo prompt pelo pipeline, não pelo modelo. Só a cena 1 recebe título, gravado pelo FFmpeg com o texto exato.</p></div>
+    <div class="card"><h3>Estrutura de uma corrida</h3><pre><span class="s">~/projetos/output/videomotival/&lt;run&gt;/</span>
+├── final.mp4
+├── manifest.json
+└── work/
+    ├── story.md · transcript.md · scenes.json
+    ├── audio/001.mp3 …
+    ├── images/001.png …
+    └── video/001.mp4 …</pre></div>
+  </div>
+</div></section>
+
+<section id="pre"><div class="wrap">
+  <span class="chip">Pré-requisitos</span>
+  <h2>O que precisa estar no ar</h2>
+  <p class="sub">Tudo local. Nenhuma chave vai para o repositório: as chaves de LLM são lidas em runtime dos arquivos de segredo da máquina.</p>
+  <div class="grid g3">
+    <div class="card"><h3>FFmpeg + Python 3.12</h3><p>ffmpeg/ffprobe para medir, renderizar e concatenar; Pillow para o título; FastAPI só para a interface web.</p><pre><span class="k">pip</span> install -r requirements.txt
+<span class="k">python3</span> -m videomotival check</pre></div>
+    <div class="card"><h3>inemavox (voz)</h3><p>Daemon de TTS em <code>localhost:8010</code>. Padrão: engine chatterbox com a voz clonada rachel. Para testes rápidos sem GPU, engine edge.</p><pre><span class="c"># voz de teste, sem GPU</span>
+--engine edge --voice pt-BR-FranciscaNeural</pre></div>
+    <div class="card"><h3>inemaimg (imagens)</h3><p>Servidor em <code>localhost:8000</code> com o modelo flux2-klein carregado. Gera 1920x1080 em cerca de 12 segundos por cena.</p><pre><span class="c"># provedores de história, em ordem</span>
+STORY_PROVIDER=auto  <span class="c"># openrouter → groq → ollama</span></pre></div>
+  </div>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Guia de uso · passo a passo</span>
+  <h2>Do tema ao MP4</h2>
+  <p class="sub">O mesmo fluxo do tutorial original, etapa por etapa, para você revisar o que quiser no caminho. No fim, o passo único que faz tudo.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Confira o ambiente</h3>
+    <p>Verifica ffmpeg, os dois serviços locais e qual provedor de história tem chave disponível. Nunca imprime segredos.</p>
+<pre><span class="k">cd</span> ~/projetos/videomotival
+<span class="k">python3</span> -m videomotival check  <span class="c"># OK ffmpeg · história: auto · inemavox ok · inemaimg ok</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Crie a corrida e gere o roteiro</h3>
+    <p>Escreve a história, divide em cenas e para em "revisão". Os arquivos ficam em <code>work/</code> dentro da pasta da corrida.</p>
+<pre><span class="k">python3</span> -m videomotival create --topic <span class="s">"Pare de esperar a motivação"</span> --duration 75
+<span class="c"># → ~/projetos/output/videomotival/&lt;run-id&gt;/work/{story.md, transcript.md, scenes.json}</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Revise as cenas (opcional)</h3>
+    <p>Edite narração ou descrição visual direto no <code>scenes.json</code>. O <code>recompose</code> recompõe os prompts e invalida só as cenas alteradas.</p>
+<pre><span class="k">python3</span> -m videomotival recompose --run <span class="s">&lt;run-id&gt;</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Gere a narração por cena</h3>
+    <p>Um MP3 por cena (001.mp3, 002.mp3…), medido pelo ffprobe. O ritmo real em palavras por minuto é gravado e realimenta o roteirista nas próximas corridas.</p>
+<pre><span class="k">python3</span> -m videomotival tts --run <span class="s">&lt;run-id&gt;</span>  <span class="c"># [probe] 5 narrações: 58.3s medidos para alvo de 60s</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Gere as ilustrações</h3>
+    <p>Uma imagem 16:9 por cena, mesma seed e mesma bíblia do personagem em todo prompt. Uma cena saiu ruim? Regenere só ela com outra seed.</p>
+<pre><span class="k">python3</span> -m videomotival images --run <span class="s">&lt;run-id&gt;</span>
+<span class="k">python3</span> -m videomotival regen-image --run <span class="s">&lt;run-id&gt;</span> --scene 3  <span class="c"># nova seed só para a cena 3</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">6</div><div>
+    <h3>Renderize o vídeo</h3>
+    <p>Cada par imagem + áudio vira um clipe com zoom lento alternado; a cena 1 recebe o título; os clipes são concatenados e o resultado é verificado (1920x1080, áudio, duração).</p>
+<pre><span class="k">python3</span> -m videomotival render --run <span class="s">&lt;run-id&gt;</span> [--music trilha.mp3]
+<span class="c"># → ~/projetos/output/videomotival/&lt;run-id&gt;/final.mp4 + manifest.json</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">7</div><div>
+    <h3>Ou faça tudo de uma vez</h3>
+    <p>Depois que o formato está afinado, só o tema muda. Este comando roda as sete etapas sem parar.</p>
+<pre><span class="k">python3</span> -m videomotival create --topic <span class="s">"Por que o progresso pequeno vence a motivação grande"</span> --duration 90 --auto</pre>
+  </div></div>
+
+  <div class="step"><div class="b">8</div><div>
+    <h3>Interface web ou Claude Code</h3>
+    <p>A web mostra as etapas, as cenas com áudio e imagem, deixa editar o roteiro e regenerar. A skill do Claude Code faz o mesmo por conversa.</p>
+<pre><span class="k">./run.sh</span> web   <span class="c"># → http://127.0.0.1:8030</span>
+<span class="c"># no Claude Code, dentro do projeto:</span>
+<span class="s">"Use a skill motivational-story-video: vídeo de 90 s sobre 'Como parar de se comparar'"</span></pre>
+  </div></div>
+</div></section>
+
+<section id="exemplos"><div class="wrap">
+  <span class="chip">Exemplos</span>
+  <h2>Uma corrida real de 60 segundos</h2>
+  <p class="sub">Tema "Por que o progresso pequeno vence a motivação grande": 5 cenas, voz rachel, 58 s medidos, produzido de ponta a ponta em cerca de quatro minutos.</p>
+  <div class="ex">
+    <figure><img src="assets/ex-titulo.jpg" alt="Primeiro quadro do vídeo com o título O Hábito Minúsculo Vence sobre a ilustração"><figcaption>Cena 1: o título é gravado pelo FFmpeg com o texto exato, em caixa cor de papel sobre a ilustração.</figcaption></figure>
+    <figure><img src="assets/ex-cena3.jpg" alt="Stick figure com cachecol ocre segurando um caderno como se fosse rasgá-lo"><figcaption>Cena 3: mesma personagem (cachecol ocre, caderno) no momento de dúvida da história.</figcaption></figure>
+    <figure><img src="assets/ex-cena5.jpg" alt="Stick figure caminhando com o caderno debaixo do braço"><figcaption>Cena 5: o desfecho. Nenhuma cena além da primeira contém texto.</figcaption></figure>
+    <figure><img src="assets/ex-web.jpg" alt="Interface web do videomotival mostrando o vídeo final, a bíblia do personagem e a cena 1 editável"><figcaption>Interface web: etapas, vídeo final, cenas editáveis com áudio, e botões para nova ilustração ou refazer a voz.</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="roadmap"><div class="wrap">
+  <span class="chip">Roadmap</span>
+  <h2>Onde está e para onde vai</h2>
+  <p class="sub">A arquitetura é a mesma para qualquer nicho: história de negócios, conto infantil, fato histórico. Muda o roteirista e o estilo visual.</p>
+  <div class="phase"><div class="tag">v1.0</div><div class="d"><strong>Pipeline completo, web, CLI e skill</strong><span>Tema → MP4 verificado. Provedores: OpenRouter/Groq/Ollama para história, inemavox para voz, flux2-klein para imagem. Fish Audio implementado como alternativa.</span></div></div>
+  <div class="phase"><div class="tag">próximo</div><div class="d"><strong>Consistência do personagem por referência</strong><span>Hoje é prompt + seed fixa. Usar a cena 1 como imagem de referência quando o servidor de imagens suportar edição guiada.</span></div></div>
+  <div class="phase"><div class="tag">depois</div><div class="d"><strong>Outros formatos e publicação</strong><span>Versão 9:16 para Shorts, música e efeitos pelo inemavox, e envio direto para o canal.</span></div></div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Python 3.12</div><div class="pill">FFmpeg</div><div class="pill">FastAPI</div><div class="pill">flux2-klein</div><div class="pill">inemavox</div>
+    <p style="margin-top:18px">videomotival · projeto de pesquisa e educação ·
+      <a href="https://github.com/inematds/videomotival">inematds/videomotival</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='videomotival-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Motivational Story Video"
+  short_description: "Create complete illustrated motivational videos"
+  default_prompt: "Use $motivational-story-video to create a motivational YouTube video from my topic and target duration."
+policy:
+  allow_implicit_invocation: true
