@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>videomotival — canal motivacional automatizado a custo zero</title>
-<meta content="videomotival: um tema vira história, narração por cena, ilustrações stick-figure e um MP4 16:9 — tudo rodando local, sem pagar por gerador de imagem ou vídeo. Interface web, CLI e skill do Claude Code." name="description"/>
+<title>videomotival — automated motivational channel at zero cost</title>
+<meta content="videomotival: a topic becomes a story, scene-by-scene narration, stick-figure illustrations, and a 16:9 MP4 — all running locally, without paying for an image or video generator. Web interface, CLI, and Claude Code skill." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
@@ -92,7 +92,7 @@
   .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
 </style>
 <link href="https://inematds.github.io/videomotival/guia/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/videomotival/guia/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/videomotival/guia/es/" hreflang="es" rel="alternate"/></head>
-<body><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="./" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="en/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="es/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<body><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../es/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
 <nav><div class="wrap">
 <a class="brand" href="#top"><span class="emoji">🎬</span> videomotival</a>
 <span class="sep">|</span>
@@ -102,12 +102,12 @@
 <a class="pro" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
 </span>
 <div class="links">
-<a class="sec" href="#oque">O que é</a>
-<a class="sec" href="#fluxo">Como funciona</a>
-<a class="sec" href="#guia">Guia de uso</a>
-<a class="sec" href="#exemplos">Exemplos</a>
+<a class="sec" href="#oque">What it is</a>
+<a class="sec" href="#fluxo">How it works</a>
+<a class="sec" href="#guia">User guide</a>
+<a class="sec" href="#exemplos">Examples</a>
 <a class="sec" href="#roadmap">Roadmap</a>
-<button aria-label="Alternar tema" class="tgl" id="themeToggle" title="Alternar tema">🌙</button>
+<button aria-label="Switch theme" class="tgl" id="themeToggle" title="Switch theme">🌙</button>
 <a class="btn" href="https://github.com/inematds/videomotival" rel="noopener" target="_blank">GitHub</a>
 </div>
 </div></nav>
@@ -115,44 +115,44 @@
 <div class="glow"></div>
 <div class="wrap">
 <div>
-<span class="chip">Canal motivacional · automação local · custo zero</span>
-<h1>Um tema vira um <span class="amb">vídeo</span> pronto</h1>
-<p class="lead">História original, narração por cena, ilustrações stick-figure consistentes e um MP4 16:9 montado pelo FFmpeg. Sem pagar gerador de imagem nem de vídeo.</p>
+<span class="chip">Motivational channel · local automation · zero cost</span>
+<h1>A topic becomes a <span class="amb">video</span> ready</h1>
+<p class="lead">An original story, scene-by-scene narration, consistent stick-figure illustrations, and a 16:9 MP4 assembled with FFmpeg. No need to pay for an image or video generator.</p>
 <div class="cta">
-<a class="btn" href="#guia">Começar o guia</a>
-<a class="btn ghost" href="https://github.com/inematds/videomotival" rel="noopener" target="_blank">Ver no GitHub</a>
+<a class="btn" href="#guia">Start the guide</a>
+<a class="btn ghost" href="https://github.com/inematds/videomotival" rel="noopener" target="_blank">View on GitHub</a>
 </div>
 </div>
-<figure><img alt="Ilustração pintada à mão de um stick figure com cachecol ocre subindo uma colina em papel texturizado" src="assets/hero.png"/></figure>
+<figure><img alt="Hand-painted illustration of a stick figure wearing an ochre scarf and climbing a hill on textured paper" src="../assets/hero.png"/></figure>
 </div>
 </header>
 <section id="oque"><div class="wrap">
-<span class="chip">O que é</span>
-<h2>A fábrica de vídeo do canal "Productive Peter", só que sua e de graça</h2>
-<p class="sub">Formato simples e repetível: uma história motivacional, uma voz, ilustrações que trocam conforme a narração avança. O videomotival automatiza o formato inteiro, da ideia ao MP4, com tudo rodando na sua máquina.</p>
+<span class="chip">What it is</span>
+<h2>The video factory behind the "Productive Peter" channel, only it's yours and free</h2>
+<p class="sub">A simple, repeatable format: one motivational story, one voice, illustrations that change as the narration progresses. videomotival automates the whole format, from idea to MP4, with everything running on your machine.</p>
 <div class="grid g3">
-<div class="card"><h3>✍️ Escreve a história</h3><p>Um LLM (OpenRouter, Groq ou Ollama local) escreve uma história original com arco em seis movimentos e já a divide em cenas: narração, descrição visual e prompt de imagem.</p></div>
-<div class="card"><h3>🎙️ Narra cena a cena</h3><p>Cada cena vira um MP3 separado (inemavox, voz clonada rachel). A duração do áudio comanda o tempo da imagem na tela — sem Whisper, sem timestamps.</p></div>
-<div class="card"><h3>🖼️ Ilustra e monta</h3><p>flux2-klein na GPU local gera uma ilustração 16:9 por cena no mesmo estilo e com o mesmo personagem. O FFmpeg aplica zoom lento, grava o título e concatena o vídeo final.</p></div>
+<div class="card"><h3>✍️ Write the story</h3><p>An LLM (OpenRouter, Groq, or local Ollama) writes an original story with a six-part arc and divides it into scenes: narration, visual description, and image prompt.</p></div>
+<div class="card"><h3>🎙️ Narrate scene by scene</h3><p>Each scene becomes a separate MP3 (inemavox, cloned rachel voice). The audio duration controls how long the image stays on screen—no Whisper, no timestamps.</p></div>
+<div class="card"><h3>🖼️ Illustrate and assemble</h3><p>flux2-klein on the local GPU generates one 16:9 illustration per scene in the same style and with the same character. FFmpeg applies a slow zoom, adds the title, and concatenates the final video.</p></div>
 </div>
 </div></section>
 <section id="fluxo"><div class="wrap">
-<span class="chip">Como funciona</span>
-<h2>Sete etapas, um comando</h2>
-<p class="sub">O pipeline é determinístico e retomável: cada etapa grava seus arquivos na pasta da corrida e pula o que já existe. Você pode parar para revisar o roteiro antes de gastar GPU, ou rodar tudo de uma vez.</p>
+<span class="chip">How it works</span>
+<h2>Seven steps, one command</h2>
+<p class="sub">The pipeline is deterministic and resumable: each step saves its files in the run folder and skips anything that already exists. You can stop to review the script before using GPU resources, or run everything at once.</p>
 <div class="flow">
-<span>Tema</span><span class="arr">→</span>
-<span>História + cenas</span><span class="arr">→</span>
-<span>Voz por cena</span><span class="arr">→</span>
-<span>ffprobe mede</span><span class="arr">→</span>
-<span>Ilustrações</span><span class="arr">→</span>
-<span>FFmpeg cenas</span><span class="arr">→</span>
-<span>MP4 final</span>
+<span>Topic</span><span class="arr">→</span>
+<span>Story + scenes</span><span class="arr">→</span>
+<span>Voice per scene</span><span class="arr">→</span>
+<span>ffprobe measures</span><span class="arr">→</span>
+<span>Illustrations</span><span class="arr">→</span>
+<span>FFmpeg scenes</span><span class="arr">→</span>
+<span>Final MP4</span>
 </div>
 <div class="grid g3" style="margin-top:26px">
-<div class="card"><h3>Três portas de entrada</h3><p>Interface web local (revisão visual das cenas, regenerar ilustração, refazer voz), CLI por etapa, e uma skill do Claude Code que orquestra tudo a partir de "faz um vídeo de 90 s sobre X".</p></div>
-<div class="card"><h3>Estilo travado em código</h3><p>Estilo visual, bíblia do personagem e o bloco "sem texto" são anexados a todo prompt pelo pipeline, não pelo modelo. Só a cena 1 recebe título, gravado pelo FFmpeg com o texto exato.</p></div>
-<div class="card"><h3>Estrutura de uma corrida</h3><pre><span class="s">~/projetos/output/videomotival/&lt;run&gt;/</span>
+<div class="card"><h3>Three entry points</h3><p>Local web interface (visual scene review, regenerate an illustration, redo voice), CLI for each step, and a Claude Code skill that orchestrates everything from “make a 90 s video about X.”</p></div>
+<div class="card"><h3>Style locked in code</h3><p>The pipeline appends the visual style, character bible, and "no text" block to every prompt—not the model. Only scene 1 gets a title, rendered by FFmpeg with the exact text.</p></div>
+<div class="card"><h3>Run structure</h3><pre><span class="s">~/projetos/output/videomotival/&lt;run&gt;/</span>
 ├── final.mp4
 ├── manifest.json
 └── work/
@@ -163,92 +163,92 @@
 </div>
 </div></section>
 <section id="pre"><div class="wrap">
-<span class="chip">Pré-requisitos</span>
-<h2>O que precisa estar no ar</h2>
-<p class="sub">Tudo local. Nenhuma chave vai para o repositório: as chaves de LLM são lidas em runtime dos arquivos de segredo da máquina.</p>
+<span class="chip">Prerequisites</span>
+<h2>What needs to be running</h2>
+<p class="sub">Everything runs locally. No keys go into the repository: LLM keys are read at runtime from the machine’s secret files.</p>
 <div class="grid g3">
-<div class="card"><h3>FFmpeg + Python 3.12</h3><p>ffmpeg/ffprobe para medir, renderizar e concatenar; Pillow para o título; FastAPI só para a interface web.</p><pre><span class="k">pip</span> install -r requirements.txt
+<div class="card"><h3>FFmpeg + Python 3.12</h3><p>ffmpeg/ffprobe to measure, render, and concatenate; Pillow for the title; FastAPI only for the web interface.</p><pre><span class="k">pip</span> install -r requirements.txt
 <span class="k">python3</span> -m videomotival check</pre></div>
-<div class="card"><h3>inemavox (voz)</h3><p>Daemon de TTS em <code>localhost:8010</code>. Padrão: engine chatterbox com a voz clonada rachel. Para testes rápidos sem GPU, engine edge.</p><pre><span class="c"># voz de teste, sem GPU</span>
+<div class="card"><h3>inemavox (voice)</h3><p>TTS daemon at <code>localhost:8010</code>. Default: chatterbox engine with the cloned rachel voice. For quick tests without a GPU, use the edge engine.</p><pre><span class="c"># test voice, no GPU</span>
 --engine edge --voice pt-BR-FranciscaNeural</pre></div>
-<div class="card"><h3>inemaimg (imagens)</h3><p>Servidor em <code>localhost:8000</code> com o modelo flux2-klein carregado. Gera 1920x1080 em cerca de 12 segundos por cena.</p><pre><span class="c"># provedores de história, em ordem</span>
+<div class="card"><h3>inemaimg (images)</h3><p>Server at <code>localhost:8000</code> with the flux2-klein model loaded. Generates 1920x1080 in about 12 seconds per scene.</p><pre><span class="c"># story providers, in order</span>
 STORY_PROVIDER=auto  <span class="c"># openrouter → groq → ollama</span></pre></div>
 </div>
 </div></section>
 <section id="guia"><div class="wrap">
-<span class="chip">Guia de uso · passo a passo</span>
-<h2>Do tema ao MP4</h2>
-<p class="sub">O mesmo fluxo do tutorial original, etapa por etapa, para você revisar o que quiser no caminho. No fim, o passo único que faz tudo.</p>
+<span class="chip">User guide · step by step</span>
+<h2>From topic to MP4</h2>
+<p class="sub">The same workflow as the original tutorial, step by step, so you can review anything along the way. At the end, one step does it all.</p>
 <div class="step"><div class="b">1</div><div>
-<h3>Confira o ambiente</h3>
-<p>Verifica ffmpeg, os dois serviços locais e qual provedor de história tem chave disponível. Nunca imprime segredos.</p>
+<h3>Check your environment</h3>
+<p>Checks for ffmpeg, both local services, and which story provider has an available key. Never prints secrets.</p>
 <pre><span class="k">cd</span> ~/projetos/videomotival
-<span class="k">python3</span> -m videomotival check  <span class="c"># OK ffmpeg · história: auto · inemavox ok · inemaimg ok</span></pre>
+<span class="k">python3</span> -m videomotival check  <span class="c"># OK ffmpeg · history: auto · inemavox ok · inemaimg ok</span></pre>
 </div></div>
 <div class="step"><div class="b">2</div><div>
-<h3>Crie a corrida e gere o roteiro</h3>
-<p>Escreve a história, divide em cenas e para em "revisão". Os arquivos ficam em <code>work/</code> dentro da pasta da corrida.</p>
+<h3>Create a run and generate the script</h3>
+<p>Writes the story, splits it into scenes, and stops at "review". The files are saved in <code>work/</code> inside the run folder.</p>
 <pre><span class="k">python3</span> -m videomotival create --topic <span class="s">"Pare de esperar a motivação"</span> --duration 75
 <span class="c"># → ~/projetos/output/videomotival/&lt;run-id&gt;/work/{story.md, transcript.md, scenes.json}</span></pre>
 </div></div>
 <div class="step"><div class="b">3</div><div>
-<h3>Revise as cenas (opcional)</h3>
-<p>Edite narração ou descrição visual direto no <code>scenes.json</code>. O <code>recompose</code> recompõe os prompts e invalida só as cenas alteradas.</p>
+<h3>Review the scenes (optional)</h3>
+<p>Edit the narration or visual description directly in <code>scenes.json</code>. O <code>recompose</code> rebuilds the prompts and invalidates only the changed scenes.</p>
 <pre><span class="k">python3</span> -m videomotival recompose --run <span class="s">&lt;run-id&gt;</span></pre>
 </div></div>
 <div class="step"><div class="b">4</div><div>
-<h3>Gere a narração por cena</h3>
-<p>Um MP3 por cena (001.mp3, 002.mp3…), medido pelo ffprobe. O ritmo real em palavras por minuto é gravado e realimenta o roteirista nas próximas corridas.</p>
-<pre><span class="k">python3</span> -m videomotival tts --run <span class="s">&lt;run-id&gt;</span>  <span class="c"># [probe] 5 narrações: 58.3s medidos para alvo de 60s</span></pre>
+<h3>Generate narration for each scene</h3>
+<p>One MP3 per scene (001.mp3, 002.mp3…), measured with ffprobe. The actual pace in words per minute is recorded and feeds back into the scriptwriter on future runs.</p>
+<pre><span class="k">python3</span> -m videomotival tts --run <span class="s">&lt;run-id&gt;</span>  <span class="c"># [probe] 5 narrations: 58.3s measured against a 60s target</span></pre>
 </div></div>
 <div class="step"><div class="b">5</div><div>
-<h3>Gere as ilustrações</h3>
-<p>Uma imagem 16:9 por cena, mesma seed e mesma bíblia do personagem em todo prompt. Uma cena saiu ruim? Regenere só ela com outra seed.</p>
+<h3>Generate the illustrations</h3>
+<p>One 16:9 image per scene, with the same seed and character bible in every prompt. Did a scene turn out badly? Regenerate just that one with a different seed.</p>
 <pre><span class="k">python3</span> -m videomotival images --run <span class="s">&lt;run-id&gt;</span>
-<span class="k">python3</span> -m videomotival regen-image --run <span class="s">&lt;run-id&gt;</span> --scene 3  <span class="c"># nova seed só para a cena 3</span></pre>
+<span class="k">python3</span> -m videomotival regen-image --run <span class="s">&lt;run-id&gt;</span> --scene 3  <span class="c"># new seed for scene 3 only</span></pre>
 </div></div>
 <div class="step"><div class="b">6</div><div>
-<h3>Renderize o vídeo</h3>
-<p>Cada par imagem + áudio vira um clipe com zoom lento alternado; a cena 1 recebe o título; os clipes são concatenados e o resultado é verificado (1920x1080, áudio, duração).</p>
+<h3>Render the video</h3>
+<p>Each image + audio pair becomes a clip with alternating slow zooms; scene 1 gets the title; the clips are concatenated and the result is verified (1920x1080, audio, duration).</p>
 <pre><span class="k">python3</span> -m videomotival render --run <span class="s">&lt;run-id&gt;</span> [--music trilha.mp3]
 <span class="c"># → ~/projetos/output/videomotival/&lt;run-id&gt;/final.mp4 + manifest.json</span></pre>
 </div></div>
 <div class="step"><div class="b">7</div><div>
-<h3>Ou faça tudo de uma vez</h3>
-<p>Depois que o formato está afinado, só o tema muda. Este comando roda as sete etapas sem parar.</p>
+<h3>Or do it all at once</h3>
+<p>Once the format is dialed in, only the topic changes. This command runs all seven steps without stopping.</p>
 <pre><span class="k">python3</span> -m videomotival create --topic <span class="s">"Por que o progresso pequeno vence a motivação grande"</span> --duration 90 --auto</pre>
 </div></div>
 <div class="step"><div class="b">8</div><div>
-<h3>Interface web ou Claude Code</h3>
-<p>A web mostra as etapas, as cenas com áudio e imagem, deixa editar o roteiro e regenerar. A skill do Claude Code faz o mesmo por conversa.</p>
+<h3>Web interface or Claude Code</h3>
+<p>The web interface shows the steps and scenes with audio and images, and lets you edit the script and regenerate. The Claude Code skill does the same through conversation.</p>
 <pre><span class="k">./run.sh</span> web   <span class="c"># → http://127.0.0.1:8030</span>
-<span class="c"># no Claude Code, dentro do projeto:</span>
+<span class="c"># in Claude Code, inside the project:</span>
 <span class="s">"Use a skill motivational-story-video: vídeo de 90 s sobre 'Como parar de se comparar'"</span></pre>
 </div></div>
 </div></section>
 <section id="exemplos"><div class="wrap">
-<span class="chip">Exemplos</span>
-<h2>Uma corrida real de 60 segundos</h2>
-<p class="sub">Tema "Por que o progresso pequeno vence a motivação grande": 5 cenas, voz rachel, 58 s medidos, produzido de ponta a ponta em cerca de quatro minutos.</p>
+<span class="chip">Examples</span>
+<h2>A real 60-second run</h2>
+<p class="sub">Topic “Why small progress beats big motivation”: 5 scenes, rachel voice, 58 seconds measured, produced from start to finish in about four minutes.</p>
 <div class="ex">
-<figure><img alt="Primeiro quadro do vídeo com o título O Hábito Minúsculo Vence sobre a ilustração" src="assets/ex-titulo.jpg"/><figcaption>Cena 1: o título é gravado pelo FFmpeg com o texto exato, em caixa cor de papel sobre a ilustração.</figcaption></figure>
-<figure><img alt="Stick figure com cachecol ocre segurando um caderno como se fosse rasgá-lo" src="assets/ex-cena3.jpg"/><figcaption>Cena 3: mesma personagem (cachecol ocre, caderno) no momento de dúvida da história.</figcaption></figure>
-<figure><img alt="Stick figure caminhando com o caderno debaixo do braço" src="assets/ex-cena5.jpg"/><figcaption>Cena 5: o desfecho. Nenhuma cena além da primeira contém texto.</figcaption></figure>
-<figure><img alt="Interface web do videomotival mostrando o vídeo final, a bíblia do personagem e a cena 1 editável" src="assets/ex-web.jpg"/><figcaption>Interface web: etapas, vídeo final, cenas editáveis com áudio, e botões para nova ilustração ou refazer a voz.</figcaption></figure>
+<figure><img alt="First frame of the video, with the title The Tiny Habit Wins over the illustration" src="../assets/ex-titulo.jpg"/><figcaption>Scene 1: FFmpeg renders the exact text in a paper-colored box over the illustration.</figcaption></figure>
+<figure><img alt="Stick figure with an ochre scarf holding a notebook as if about to tear it" src="../assets/ex-cena3.jpg"/><figcaption>Scene 3: the same character (ochre scarf, notebook) at the story's moment of doubt.</figcaption></figure>
+<figure><img alt="Stick figure walking with a notebook under its arm" src="../assets/ex-cena5.jpg"/><figcaption>Scene 5: the resolution. No scene other than the first contains text.</figcaption></figure>
+<figure><img alt="Videomotival web interface showing the final video, the character bible, and editable scene 1" src="../assets/ex-web.jpg"/><figcaption>Web interface: steps, final video, editable scenes with audio, and buttons to create a new illustration or redo the voice.</figcaption></figure>
 </div>
 </div></section>
 <section id="roadmap"><div class="wrap">
 <span class="chip">Roadmap</span>
-<h2>Onde está e para onde vai</h2>
-<p class="sub">A arquitetura é a mesma para qualquer nicho: história de negócios, conto infantil, fato histórico. Muda o roteirista e o estilo visual.</p>
-<div class="phase"><div class="tag">v1.0</div><div class="d"><strong>Pipeline completo, web, CLI e skill</strong><span>Tema → MP4 verificado. Provedores: OpenRouter/Groq/Ollama para história, inemavox para voz, flux2-klein para imagem. Fish Audio implementado como alternativa.</span></div></div>
-<div class="phase"><div class="tag">próximo</div><div class="d"><strong>Consistência do personagem por referência</strong><span>Hoje é prompt + seed fixa. Usar a cena 1 como imagem de referência quando o servidor de imagens suportar edição guiada.</span></div></div>
-<div class="phase"><div class="tag">depois</div><div class="d"><strong>Outros formatos e publicação</strong><span>Versão 9:16 para Shorts, música e efeitos pelo inemavox, e envio direto para o canal.</span></div></div>
+<h2>Where it is and where it goes</h2>
+<p class="sub">The architecture is the same for any niche: business stories, children's tales, historical facts. The scriptwriter and visual style change.</p>
+<div class="phase"><div class="tag">v1.0</div><div class="d"><strong>Complete pipeline, web, CLI, and skill</strong><span>Topic → verified MP4. Providers: OpenRouter/Groq/Ollama for the story, inemavox for voice, flux2-klein for images. Fish Audio implemented as an alternative.</span></div></div>
+<div class="phase"><div class="tag">next</div><div class="d"><strong>Character consistency through reference images</strong><span>For now, it uses a prompt + fixed seed. Use scene 1 as a reference image when the image server supports guided editing.</span></div></div>
+<div class="phase"><div class="tag">after</div><div class="d"><strong>Other formats and publishing</strong><span>9:16 version for Shorts, music and effects through inemavox, and direct upload to the channel.</span></div></div>
 </div></section>
 <footer>
 <div class="wrap">
 <div class="pill">Python 3.12</div><div class="pill">FFmpeg</div><div class="pill">FastAPI</div><div class="pill">flux2-klein</div><div class="pill">inemavox</div>
-<p style="margin-top:18px">videomotival · projeto de pesquisa e educação ·
+<p style="margin-top:18px">videomotival · research and education project ·
       <a href="https://github.com/inematds/videomotival">inematds/videomotival</a> ·
       <a href="https://inema.club">INEMA.CLUB</a></p>
 </div>
